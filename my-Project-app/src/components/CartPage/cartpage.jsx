@@ -1,11 +1,14 @@
 import React from "react";
 import styles from './cartpage.module.css'
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import CartProductBlock from '../Cartproductblock/cartproductblock'
 
-export default function renderCartPage(){
+export default function renderCartPage() {
     const [userDetails, setDetails] = useState({});
-    const navigator=useNavigate();
+    const [cartDetails, setCartDetails] = useState([]);
+    const navigator = useNavigate();
     useEffect(function () {
         const token = localStorage.getItem("token");
         if (!token) {
@@ -37,14 +40,40 @@ export default function renderCartPage(){
     useEffect(function () {
         // getfiveproducts();
         // console.log("wytfdtsyg", userDetails.userid);
-        
+        if (userDetails.username) {
+
+            fetch("http://localhost:3000/givecartitems", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({ username: userDetails.username }),
+            }).then(function (response) {
+                console.log(response.status);
+                if (response.status == 500) {
+                    Swal.fire({ title: "Something went wrong", icon: "error" });
+                }
+                else if (response.status == 201) {
+                    Swal.fire({ title: "Cart is Empty" }).then(function () {
+                        navigator("/productpage");
+                    })
+                }
+                return response.json();
+            }).then(function (data) {
+                console.log(data.cartdata);
+                // const cdata = data.cartdata;
+                setCartDetails([...data.cartdata]);
+                // console.log(cartDetails);
+            }).catch(function (err) {
+                Swal.fire({ title: err, icon: "error" });
+            })
+        }
     }, [userDetails])
-    function goback(){
+    function goback() {
         navigator("/productpage");
     }
-    return(
+    return (
         <>
-           <header className={styles.header}>
+            {/* {console.log(cartDetails)} */}
+            <header className={styles.header}>
                 <div className={styles.headerdiv}>
                     <p className={styles.username}><span className={styles.namespan}>Username:{userDetails.username}</span></p>
                     {/* <select onChange={onSelectInput} className={styles.options}>
@@ -57,11 +86,11 @@ export default function renderCartPage(){
                 </div>
             </header>
             <h1 className={styles.h1}>Cart Page</h1>
-            {/* <div className={styles.container}>
-            {productdetails.map((element,index) => (
-                <CreateProductBlockForUser  key={index} pid={element._id} image={element.image} name={element.name} description={element.description} price={element.price} quantity={element.stock} />
+            <div className={styles.container}>
+                {cartDetails.map((element, index) => (
+                    <CartProductBlock key={index} productid={element.productid} image={element.image} name={element.name} description={element.description} price={element.price} stock={element.stock} quantity={element.quantity}/>
                 ))}
-            </div> */}
+            </div>
             {/* {flag ? <button className={styles.button} onClick={getfiveproducts}>Load More</button>:<></>} */}
             {/* <button className={styles.button} onClick={getfiveproducts}>Load More</button> */}
         </>

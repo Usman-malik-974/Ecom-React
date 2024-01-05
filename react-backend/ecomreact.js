@@ -53,6 +53,8 @@ const forgotPassword=require("./controller/forgotpassword");
 
 const addToCart=require("./controller/addtocart");
 
+const giveCartItems=require("./controller/givecartitems");
+
 // app.use(express.static("products"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -93,6 +95,8 @@ app.post("/resetpassword",verifytoken,resetPassword);
 app.post("/forgotpassword",forgotPassword);
 
 app.post("/addtocart",verifytoken,addToCart);
+
+app.post("/givecartitems",giveCartItems);
 // app.get("/c9b6e340a7608b8ca38d5efb6a43fcea",function(request,response){
 //     response.sendFile("./productimages/c9b6e340a7608b8ca38d5efb6a43fcea");
 // })
