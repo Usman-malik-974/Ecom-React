@@ -1,0 +1,30 @@
+.productblock{
+    border:2px solid black; 
+    padding: 10px;
+    /* margin-left: 10px;
+    margin-right: 10px; */
+}
+.oneline{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:5px;
+}
+.button{
+    border:none;
+    background-color:rgb(13, 117, 221);
+    color:white;
+    padding: 10px 10px;
+    border-radius: 5px;
+    /* border-bottom: 0ch; */
+}
+.img{
+    width:200px;
+    height:230px;
+}
+.hide{
+    display: none;
+}
+.nameprice{
+    font-weight: 500;
+}
