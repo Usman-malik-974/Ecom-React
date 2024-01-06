@@ -8,6 +8,11 @@ import CartProductBlock from '../Cartproductblock/cartproductblock'
 export default function renderCartPage() {
     const [userDetails, setDetails] = useState({});
     const [cartDetails, setCartDetails] = useState([]);
+    // const [billDetails,setBillDetails]=useState({
+    //     totalquantity:"",
+    //     totalprice:""
+    // });
+    let totalquantity = 0, totalprice = 0;
     const navigator = useNavigate();
     useEffect(function () {
         const token = localStorage.getItem("token");
@@ -70,45 +75,60 @@ export default function renderCartPage() {
     function goback() {
         navigator("/productpage");
     }
-    function onDeletePress(pid){
-        fetch("http://localhost:3000/deletefromcart",{
-            method:"POST",
-            headers:{"content-type":"application/json",token:localStorage.getItem("token").split(":")[0]},
-            body:JSON.stringify({productid:pid})
-        }).then(function(response){
-            if(response.status!=200){
+    function onDeletePress(pid) {
+        fetch("http://localhost:3000/deletefromcart", {
+            method: "POST",
+            headers: { "content-type": "application/json", token: localStorage.getItem("token").split(":")[0] },
+            body: JSON.stringify({ productid: pid })
+        }).then(function (response) {
+            if (response.status != 200) {
                 throw new Error("Something went wrong");
             }
-            else
-            {
-                Swal.fire({title:"Product Deleted from cart",icon:"success"});
-                setCartDetails(cartDetails.filter(function(element){
-                    return element.productid!=pid;
+            else {
+                Swal.fire({ title: "Product Deleted from cart", icon: "success" });
+                setCartDetails(cartDetails.filter(function (element) {
+                    return element.productid != pid;
                 }))
             }
-        }).catch(function(err){
-            Swal.fire({title:err,icon:"error"})
-        })     
+        }).catch(function (err) {
+            Swal.fire({ title: err, icon: "error" })
+        })
     }
-    function onMinusPress(pid){
-        let arr=[];
-        for(let i=0;i<cartDetails.length;i++){
-            if(cartDetails[i].productid==pid){
+    function onMinusPress(pid) {
+        let arr = [];
+        for (let i = 0; i < cartDetails.length; i++) {
+            if (cartDetails[i].productid == pid) {
                 cartDetails[i].quantity--;
             }
-            arr[i]=cartDetails[i];
+            arr[i] = cartDetails[i];
         }
         setCartDetails(arr);
     }
-    function onPlusPress(pid){
-        let arr=[];
-        for(let i=0;i<cartDetails.length;i++){
-            if(cartDetails[i].productid==pid){
+    function onPlusPress(pid) {
+        let arr = [];
+        for (let i = 0; i < cartDetails.length; i++) {
+            if (cartDetails[i].productid == pid) {
                 cartDetails[i].quantity++;
             }
-            arr[i]=cartDetails[i];
+            arr[i] = cartDetails[i];
         }
         setCartDetails(arr);
+    }
+    function onPurchasePress() {
+        // console.log("wijssk");
+        Swal.fire({
+            title: "Are you sure",
+            icon:"warning",
+            showCancelButton:true,
+            cancelButtonColor:"Red",
+            confirmButtonText:"Yes, Proceed",
+            cancelButtonText:"No, Cancel it",
+        }).then(function(decision){
+            if(decision.isConfirmed){
+                // console.log("orderform");
+                navigator("/orderform");
+            }
+        })
     }
     return (
         <>
@@ -128,11 +148,30 @@ export default function renderCartPage() {
             <h1 className={styles.h1}>Cart Page</h1>
             <div className={styles.container}>
                 {cartDetails.map((element, index) => (
-                    <CartProductBlock increasequantity={onPlusPress} reducequantity={onMinusPress} deletefromcart={onDeletePress} key={index} productid={element.productid} image={element.image} name={element.name} description={element.description} price={element.price} stock={element.stock} quantity={element.quantity}/>
+                    <CartProductBlock increasequantity={onPlusPress} reducequantity={onMinusPress} deletefromcart={onDeletePress} key={index} productid={element.productid} image={element.image} name={element.name} description={element.description} price={element.price} stock={element.stock} quantity={element.quantity} />
                 ))}
             </div>
             {/* {flag ? <button className={styles.button} onClick={getfiveproducts}>Load More</button>:<></>} */}
             {/* <button className={styles.button} onClick={getfiveproducts}>Load More</button> */}
+            <div className={styles.bill}>
+                {cartDetails.map(function (element, index) {
+                    console.log(element);
+                    totalquantity = totalquantity + parseInt(element.quantity);
+                    totalprice = totalprice + parseInt(element.price * element.quantity);
+                })}
+                <h3 className={styles.h3}>Total bill</h3>
+                <div className={styles.oneline}>
+                    <span>Total Quantity:</span>
+                    <span>{totalquantity}</span>
+                </div>
+                <div className={styles.oneline}>
+                    <span>Total Price:</span>
+                    <span>Rs.{totalprice}</span>
+                </div>
+                <div className={styles.pdiv}>
+                    <button onClick={onPurchasePress} className={styles.purchase}>Purchase</button>
+                </div>
+            </div>
         </>
     )
 }

@@ -60,3 +60,35 @@ body{
     padding: 5px 10px;
     border-radius:20px;
 }
+.bill{
+    position: fixed;
+    max-width:50%;
+    min-height: 10%;
+    /* position: absolute; */
+    top:18.5%;
+    right:0.5%;
+    background-color: blueviolet;
+    border-radius: 5px;
+    color:white;
+    padding: 5px;
+}
+.oneline{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+}
+.h3{
+    text-align: center;
+}
+.purchase{
+    background-color:rgb(250, 244, 244);
+    border: none;
+    color:blueviolet;
+    /* margin: 10px; */
+    padding: 5px 10px;
+    border-radius:20px;
+}
+.pdiv{
+    text-align: center;
+}

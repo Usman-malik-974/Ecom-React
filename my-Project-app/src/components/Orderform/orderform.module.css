@@ -27,7 +27,7 @@ body {
   .input{
     width: 100%;
     padding: 10px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
 
     margin-bottom: 20px;
     box-sizing: border-box;
@@ -50,4 +50,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .goback{
+    background-color: #4caf50;
+    color: #fff;
+
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  .hide{
+    display: none;
   }

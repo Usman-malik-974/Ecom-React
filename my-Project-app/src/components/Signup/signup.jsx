@@ -67,7 +67,10 @@ export default function Signup() {
                     <li>Atleast one number<span id="span4">&#x2713;</span></li>
                 </ul> */}
                 <button className={styles.button} onClick={onLoginPress}>Signup</button><br/><br/>
+                <div className={styles.oneline}>
                 <Link to="/login">Already a user? Login!</Link>
+                <Link to="/signupmerchant">SignUp as Merchant</Link>
+                </div>
             </div>
         </>
     )

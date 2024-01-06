@@ -8,6 +8,8 @@ import ProductPage from './components/Product/product'
 import ResetPassword from './components/ResetPassword/resetpassword'
 import ForgotPassword from './components/Forgotpassword/forgotpassword'
 import GoToCart from './components/CartPage/cartpage'
+import MerchantSignup from './components/MerchantSignup/merchantsignup'
+import OrderForm from './components/Orderform/orderform'
 
 function App() {
   // const router = createBrowserRouter([
@@ -28,6 +30,8 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/gotocart" element={<GoToCart />} />
+        <Route path="/signupmerchant" element={<MerchantSignup />} />
+        <Route path="/orderform" element={<OrderForm />} />
       </Route>
     )
   )
