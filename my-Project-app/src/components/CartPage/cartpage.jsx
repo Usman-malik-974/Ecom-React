@@ -70,6 +70,46 @@ export default function renderCartPage() {
     function goback() {
         navigator("/productpage");
     }
+    function onDeletePress(pid){
+        fetch("http://localhost:3000/deletefromcart",{
+            method:"POST",
+            headers:{"content-type":"application/json",token:localStorage.getItem("token").split(":")[0]},
+            body:JSON.stringify({productid:pid})
+        }).then(function(response){
+            if(response.status!=200){
+                throw new Error("Something went wrong");
+            }
+            else
+            {
+                Swal.fire({title:"Product Deleted from cart",icon:"success"});
+                setCartDetails(cartDetails.filter(function(element){
+                    return element.productid!=pid;
+                }))
+            }
+        }).catch(function(err){
+            Swal.fire({title:err,icon:"error"})
+        })     
+    }
+    function onMinusPress(pid){
+        let arr=[];
+        for(let i=0;i<cartDetails.length;i++){
+            if(cartDetails[i].productid==pid){
+                cartDetails[i].quantity--;
+            }
+            arr[i]=cartDetails[i];
+        }
+        setCartDetails(arr);
+    }
+    function onPlusPress(pid){
+        let arr=[];
+        for(let i=0;i<cartDetails.length;i++){
+            if(cartDetails[i].productid==pid){
+                cartDetails[i].quantity++;
+            }
+            arr[i]=cartDetails[i];
+        }
+        setCartDetails(arr);
+    }
     return (
         <>
             {/* {console.log(cartDetails)} */}
@@ -88,7 +128,7 @@ export default function renderCartPage() {
             <h1 className={styles.h1}>Cart Page</h1>
             <div className={styles.container}>
                 {cartDetails.map((element, index) => (
-                    <CartProductBlock key={index} productid={element.productid} image={element.image} name={element.name} description={element.description} price={element.price} stock={element.stock} quantity={element.quantity}/>
+                    <CartProductBlock increasequantity={onPlusPress} reducequantity={onMinusPress} deletefromcart={onDeletePress} key={index} productid={element.productid} image={element.image} name={element.name} description={element.description} price={element.price} stock={element.stock} quantity={element.quantity}/>
                 ))}
             </div>
             {/* {flag ? <button className={styles.button} onClick={getfiveproducts}>Load More</button>:<></>} */}

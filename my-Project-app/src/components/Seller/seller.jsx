@@ -105,10 +105,9 @@ export default function RenderSellerHomePage() {
         }
         else if (event.target.value == "goback");
     }
-console.log("here: ",productdetails)
+// console.log("here: ",productdetails)
     function deleteFunction(pid) {
         console.log(pid);
-
         let arr=productdetails.filter(function(element){
             return element._id!=pid;
         })
@@ -135,6 +134,16 @@ console.log("here: ",productdetails)
     //     }
     //     </>
     // )
+    function ChangeInputFunction(updatedata){
+        let arr=[];
+        for(let i=0;i<productdetails.length;i++){
+            if(productdetails[i]._id==updatedata.pid){
+                productdetails[i][updatedata.key]=updatedata.value;
+            }
+            arr[i]=productdetails[i];
+        }
+        setProductDetails(arr);
+    }
     return (
         <>
             {console.log(productdetails)}
@@ -176,9 +185,9 @@ console.log("here: ",productdetails)
             </fieldset>
 
             <h1 className={styles.h1}>Available Products</h1> 
-            <div className={styles.container} >
+            <div className={styles.container} key={164215}>
                 {productdetails.map((element, index) => (
-                    <CreateProductBlock ondeletepress={deleteFunction}  pid={element._id} image={element.image} name={element.name} description={element.description} price={element.price} quantity={element.stock} />
+                    <CreateProductBlock  onchangeinput={ChangeInputFunction} ondeletepress={deleteFunction}  pdata={element} />
                 ))}
             </div>
             {/* {productdetails.forEach(function (element) {

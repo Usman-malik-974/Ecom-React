@@ -55,6 +55,10 @@ const addToCart=require("./controller/addtocart");
 
 const giveCartItems=require("./controller/givecartitems");
 
+const deleteFromCart=require("./controller/deletefromcart");
+
+const updateCartQty=require("./controller/updatequantityincart");
+
 // app.use(express.static("products"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -97,6 +101,10 @@ app.post("/forgotpassword",forgotPassword);
 app.post("/addtocart",verifytoken,addToCart);
 
 app.post("/givecartitems",giveCartItems);
+
+app.post("/deletefromcart",verifytoken,deleteFromCart);
+
+app.post("/updatecartqty",verifytoken,updateCartQty);
 // app.get("/c9b6e340a7608b8ca38d5efb6a43fcea",function(request,response){
 //     response.sendFile("./productimages/c9b6e340a7608b8ca38d5efb6a43fcea");
 // })
