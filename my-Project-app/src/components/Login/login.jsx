@@ -10,7 +10,7 @@ export default function Login() {
         if (token) {
             const t = token.split(":");
             if (t[1] == "admin") {
-
+                navigator("/admin");
             }
             else if (t[1] == "seller") {
                 navigator("/seller");
@@ -49,6 +49,9 @@ export default function Login() {
                 }
                 else if (data == 'seller') {
                     navigator("/seller");
+                }
+                else if(data=='admin'){
+                    navigator("/admin");
                 }
                 else {
                     setError("Invalid Credentials");

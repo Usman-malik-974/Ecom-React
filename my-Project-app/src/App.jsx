@@ -10,6 +10,7 @@ import ForgotPassword from './components/Forgotpassword/forgotpassword'
 import GoToCart from './components/CartPage/cartpage'
 import MerchantSignup from './components/MerchantSignup/merchantsignup'
 import OrderForm from './components/Orderform/orderform'
+import AdminPage from './components/AdminPage/adminpage'
 
 function App() {
   // const router = createBrowserRouter([
@@ -32,6 +33,7 @@ function App() {
         <Route path="/gotocart" element={<GoToCart />} />
         <Route path="/signupmerchant" element={<MerchantSignup />} />
         <Route path="/orderform" element={<OrderForm />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Route>
     )
   )

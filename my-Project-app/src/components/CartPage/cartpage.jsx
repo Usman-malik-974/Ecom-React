@@ -57,16 +57,29 @@ export default function renderCartPage() {
                     Swal.fire({ title: "Something went wrong", icon: "error" });
                 }
                 else if (response.status == 201) {
-                    Swal.fire({ title: "Cart is Empty" }).then(function () {
+                    Swal.fire({ title: "Cart is Empty", icon: "warning" }).then(function () {
                         navigator("/productpage");
                     })
                 }
-                return response.json();
-            }).then(function (data) {
-                console.log(data.cartdata);
-                // const cdata = data.cartdata;
-                setCartDetails([...data.cartdata]);
-                // console.log(cartDetails);
+                else {
+                    const data = response.json();
+                    console.log(data);
+                    data.then(function (cdata) {
+
+                        setCartDetails([...cdata.cartdata]);
+                    })
+                    // const cdata=data.cartdata;
+                    // console.log(data.cartdata);
+                    // const cdata = data.cartdata;
+                }
+                // }).then(function (data) {
+                //     console.log(data.cartdata);
+                //     // const cdata = data.cartdata;
+                //     setCartDetails([...data.cartdata]);
+                //     // console.log(cartDetails);
+                // // })
+                // .catch(function (err) {
+                //     Swal.fire({ title: err, icon: "error" });
             }).catch(function (err) {
                 Swal.fire({ title: err, icon: "error" });
             })
@@ -115,20 +128,23 @@ export default function renderCartPage() {
         setCartDetails(arr);
     }
     function onPurchasePress() {
-        // console.log("wijssk");
-        Swal.fire({
-            title: "Are you sure",
-            icon:"warning",
-            showCancelButton:true,
-            cancelButtonColor:"Red",
-            confirmButtonText:"Yes, Proceed",
-            cancelButtonText:"No, Cancel it",
-        }).then(function(decision){
-            if(decision.isConfirmed){
-                // console.log("orderform");
+        if (cartDetails.length == 0) {
+            Swal.fire({ title: "Cart is empty", icon: "warning" }).then(function(){
+                navigator("/productpage");
+            });
+        }
+        else {
+            let flag = 0;
+            cartDetails.forEach(function (element) {
+                if (element.stock < element.quantity) {
+                    flag++;
+                    Swal.fire({ title: "Some products were out of stock in cart please remove them first to proceed further", icon: "info" })
+                }
+            })
+            if (!flag) {
                 navigator("/orderform");
             }
-        })
+        }
     }
     return (
         <>

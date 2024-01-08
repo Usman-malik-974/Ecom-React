@@ -7,7 +7,7 @@ function LoginProfileCheck(request, response) {
     const password = request.body.password;
     loginvalid(username, password, function (result) {
         if (result && result[0].isverified == 1) {
-            console.log(result);
+            // console.log(result);
             const token = jwt.sign(username, secretkey);
             // request.session.isloggedin = true;
             // request.session.username = username;
@@ -21,6 +21,10 @@ function LoginProfileCheck(request, response) {
             else if (result[0].role == "seller") {
                 // response.status(202);
                 response.send(JSON.stringify({"token":token+":seller","status":202}));
+            }
+            else if (result[0].role == "admin") {
+                // response.status(202);
+                response.send(JSON.stringify({"token":token+":admin","status":203}));
             }
             //     if (result[0].role=='admin') {
             //         request.session.isadmin = true;

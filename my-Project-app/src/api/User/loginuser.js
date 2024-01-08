@@ -14,6 +14,9 @@ export default function CreateUser(userdata) {
             else if (data.status == 202) {
                 resolve("seller");
             }
+            else if (data.status == 203) {
+                resolve("admin");
+            }
             else if (data.status == 500) {
                 resolve();
             }

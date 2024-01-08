@@ -14,46 +14,48 @@ export default function createCartProductBlock(props) {
     }
     function reduceQuantity() {
         if (props.quantity > 1) {
-            fetch("http://localhost:3000/updatecartqty",{
-                method:"POST",
-                headers:{"content-type":"application/json",token:localStorage.getItem("token").split(":")[0]},
-                body:JSON.stringify({productid:props.productid,updateqty:props.quantity-1})
-            }).then(function(response){
-                if(response.status!=200){
+            fetch("http://localhost:3000/updatecartqty", {
+                method: "POST",
+                headers: { "content-type": "application/json", token: localStorage.getItem("token").split(":")[0] },
+                body: JSON.stringify({ productid: props.productid, updateqty: props.quantity - 1 })
+            }).then(function (response) {
+                if (response.status != 200) {
                     throw new Error("Something Went Wrong");
                 }
-            }).catch(function(err){
-                Swal.fire({title:err,icon:"error"});
+            }).catch(function (err) {
+                Swal.fire({ title: err, icon: "error" });
             })
             props.reducequantity(props.productid);
             // props.quantity=props.quantity-1;
             // console.log(props.quantity);
         }
-        else{
-            Swal.fire({title:"Minimum Quantity reached",icon:"warning"});
+        else {
+            Swal.fire({ title: "Minimum Quantity reached", icon: "warning" });
         }
     }
-    function increaseQuantity(){
-        if(props.quantity<props.stock){
-            fetch("http://localhost:3000/updatecartqty",{
-                method:"POST",
-                headers:{"content-type":"application/json",token:localStorage.getItem("token").split(":")[0]},
-                body:JSON.stringify({productid:props.productid,updateqty:props.quantity+1})
-            }).then(function(response){
-                if(response.status!=200){
+    function increaseQuantity() {
+        if (props.quantity < props.stock) {
+            fetch("http://localhost:3000/updatecartqty", {
+                method: "POST",
+                headers: { "content-type": "application/json", token: localStorage.getItem("token").split(":")[0] },
+                body: JSON.stringify({ productid: props.productid, updateqty: props.quantity + 1 })
+            }).then(function (response) {
+                if (response.status != 200) {
                     throw new Error("Something Went Wrong");
                 }
-            }).catch(function(err){
-                Swal.fire({title:err,icon:"error"});
+            }).catch(function (err) {
+                Swal.fire({ title: err, icon: "error" });
             })
             props.increasequantity(props.productid);
         }
-        else{
-            Swal.fire({title:"Maximum Quantity reached",icon:"warning"});
+        else {
+            Swal.fire({ title: "Maximum Quantity reached", icon: "warning" });
         }
     }
-        return (
-            <div className={styles.productblock}>
+    return (
+        <>
+            {props.stock < props.quantity ? <div className={styles.productblock} >
+
                 <img className={styles.img} src={"http://localhost:3000/" + props.image}></img><br></br>
                 <div className={styles.oneline}>
                     <span>Name:</span>
@@ -66,12 +68,7 @@ export default function createCartProductBlock(props) {
 
                 <div className={styles.oneline}>
                     <span>Quantity: {props.quantity}</span>
-                    <span>
-                        <div className={styles.plusminbtn}>
-                            <button onClick={reduceQuantity}>-</button>
-                            <button onClick={increaseQuantity}>+</button>
-                        </div>
-                    </span>
+                    <span className={styles.outofstock}>Out of Stock</span>
                 </div>
                 {/* <br></br> */}
                 <div className={styles.oneline}>
@@ -79,5 +76,33 @@ export default function createCartProductBlock(props) {
                     <button onClick={showDetails} className={styles.button}>View Details</button>
                 </div>
             </div>
-        )
-    }
+                :
+                <div className={styles.productblock}>
+                    <img className={styles.img} src={"http://localhost:3000/" + props.image}></img><br></br>
+                    <div className={styles.oneline}>
+                        <span>Name:</span>
+                        <span className={styles.nameprice}>{props.name}</span>
+                    </div>
+                    <div className={styles.oneline}>
+                        <span>Price:</span>
+                        <span className={styles.nameprice}>Rs.{props.price}</span>
+                    </div>
+
+                    <div className={styles.oneline}>
+                        <span>Quantity: {props.quantity}</span>
+                        <span>
+                            <div className={styles.plusminbtn}>
+                                <button onClick={reduceQuantity}>-</button>
+                                <button onClick={increaseQuantity}>+</button>
+                            </div>
+                        </span>
+                    </div>
+                    {/* <br></br> */}
+                    <div className={styles.oneline}>
+                        <button onClick={deleteFromCart} className={styles.deletebtn}>Delete</button>
+                        <button onClick={showDetails} className={styles.button}>View Details</button>
+                    </div>
+                </div>}
+        </>
+    )
+}

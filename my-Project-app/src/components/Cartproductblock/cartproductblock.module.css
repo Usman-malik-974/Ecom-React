@@ -1,46 +1,58 @@
-.productblock{
-    border:2px solid black; 
+.productblock {
+    border: 2px solid black;
     padding: 10px;
     /* margin-left: 10px;
     margin-right: 10px; */
 }
-.oneline{
+
+.oneline {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 5px;
 }
-.button{
+
+.button {
     /* border:none; */
     border-width: 1px;
     background-color: black;
-    color:white;
+    color: white;
     padding: 10px 10px;
     border-radius: 5px;
 }
-.img{
-    width:200px;
-    height:200px;
+
+.img {
+    width: 200px;
+    height: 200px;
 }
-.hide{
+
+.hide {
     display: none;
 }
-.deletebtn{
+
+.deletebtn {
     border-width: 1px;
     /* background-color: rgb(212, 209, 209); */
-    color:black;
+    color: black;
     padding: 10px 10px;
     border-radius: 5px;
 }
-.plusminbtn{
+
+.plusminbtn {
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-.plusminbtn button{
-    margin:5px;
+
+.plusminbtn button {
+    margin: 5px;
     /* border:none; */
     /* padding: 5px; */
     background-color: dodgerblue;
     border-color: dodgerblue;
+}
+.outofstock{
+    color: red;
+    align-self: center;
+    margin:5px;
 }

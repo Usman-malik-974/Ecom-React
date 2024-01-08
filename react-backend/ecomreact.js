@@ -63,6 +63,12 @@ const sellerSignup = require("./controller/sellersignup");
 
 const placeOrder=require("./controller/placeorder");
 
+const giveUserDetailsToAdmin=require("./controller/giveuserdetailstoadmin")
+
+const givesellerRequestDetails=require("./controller/givesellerrequestdetails")
+
+const actionofSellerRequest=require("./controller/actionofsellerrequest")
+
 // app.use(express.static("products"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -113,6 +119,12 @@ app.post("/updatecartqty",verifytoken,updateCartQty);
 app.post("/sellersignup",sellerSignup);
 
 app.post("/placeorder",verifytoken,placeOrder);
+
+app.get("/givealluserdetails",giveUserDetailsToAdmin);
+
+app.get("/givesellerrequestdetails",givesellerRequestDetails);
+
+app.post("/actionofsellerrequest",actionofSellerRequest);
 // app.get("/c9b6e340a7608b8ca38d5efb6a43fcea",function(request,response){
 //     response.sendFile("./productimages/c9b6e340a7608b8ca38d5efb6a43fcea");
 // })

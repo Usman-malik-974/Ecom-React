@@ -31,23 +31,25 @@ export default function Signup() {
         console.log(orderDetails);
         if (orderDetails.firstname && orderDetails.lastname && orderDetails.email && orderDetails.address && orderDetails.city && orderDetails.state && orderDetails.country && orderDetails.pincode) {
             if (orderDetails.email.includes("@")) {
-                if (orderDetails.pincode.length == 6) {  
-                    console.log("moj ho gyi")    
+                if (orderDetails.pincode.length == 6) {
+                    console.log("moj ho gyi")
                     fetch("http://localhost:3000/placeorder", {
                         method: "POST",
-                        headers: { "content-type": "application/json",token:localStorage.getItem("token").split(":")[0]},
+                        headers: { "content-type": "application/json", token: localStorage.getItem("token").split(":")[0] },
                         body: JSON.stringify({ orderdetails: orderDetails })
                     }).then(function (response) {
                         if (response.status == 500) {
                             throw new Error("Something went wrong");
                         }
-                        else if (response.status == 201) {
-                            throw new Error("Username already Exists");
+                        // else if (response.status == 201) {
+                        //     throw new Error("Username already Exists");
+                        // }
+                        else if (response.status == 200) {
+                            Swal.fire({ title: "Order Placed Wait for further response", icon: "success" }).then(function () {
+                                navigator("/productpage");
+                            });
                         }
-                        else if (response.status == 202) {
-                            throw new Error("Something went wrong");
-                        }
-                        console.log("response a gya");
+                        // console.log("response a gya");
                         // else {
                         //     Swal.fire({ title: "Signup up Success", text: "Please Wait for confirmation mail", icon: "success" }).then(function () {
                         //         navigator("/");
