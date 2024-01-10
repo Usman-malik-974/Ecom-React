@@ -106,8 +106,11 @@ export default function RenderSellerHomePage() {
         // else if (event.target.value == "goback"){
             
         // }
-        else if (event.target.value == "productrequests");{
+        else if (event.target.value == "productrequests"){
             navigator("/productrequestpage")
+        }
+        else if (event.target.value == "customerorders"){
+            navigator("/customerorderspage")
         }
     }
 // console.log("here: ",productdetails)
@@ -160,6 +163,7 @@ export default function RenderSellerHomePage() {
                         <option value="logout">Logout</option>
                         {/* <option value="goback">Goback</option> */}
                         <option value="productrequests">Product Requests</option>
+                        <option value="customerorders">Customer Orders</option>
                     </select>
                 </div>
             </header>

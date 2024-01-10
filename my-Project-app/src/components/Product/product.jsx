@@ -75,6 +75,9 @@ export default function renderProductPage(){
          else if(event.target.value=="gotocart"){
             navigator("/gotocart");
          }
+         else if(event.target.value=="traceorder"){
+            navigator("/ordertracepage");
+         }
          else if(event.target.value=="resetpassword"){
             navigator("/resetpassword");
          }
@@ -88,6 +91,7 @@ export default function renderProductPage(){
                         <option  className={styles.hide} value="user">{userDetails.username}</option>
                         <option value="logout">Logout</option>
                         <option value="gotocart">Go to Cart</option>
+                        <option value="traceorder">Trace Order</option>
                         <option value="resetpassword">Reset Password</option>
                     </select>
                 </div>

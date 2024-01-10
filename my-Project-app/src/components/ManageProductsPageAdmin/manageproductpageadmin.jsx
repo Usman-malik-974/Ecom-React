@@ -57,17 +57,10 @@ export default function () {
         }
     }, [userDetails])
     useEffect(function () {
-        // console.log("ineffecr");
-        // getfiveproducts();
-        // console.log("wytfdtsyg", userDetails.userid);
         if (userDetails.username) {
-            // console.log("inif");
             fetch("http://localhost:3000/giveproductrequestdetails"
-                //     method: "POST",
-                //     headers: { "content-type": "application/json" },
-                //     body: JSON.stringify({ username: userDetails.username }),
             ).then(function (response) {
-                if (response.status != 200) {
+                if (response.status == 500) {
                     Swal.fire({ title: "something went wrong", icon: "error" })
                 }
                 return response.json();

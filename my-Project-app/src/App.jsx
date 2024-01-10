@@ -14,6 +14,10 @@ import AdminPage from './components/AdminPage/adminpage'
 import OrderDetailsPageAdmin from './components/OrderdetailsPageAdmin/orderdetailspageadmin'
 import ManageProductPageAdmin from './components/ManageProductsPageAdmin/manageproductpageadmin'
 import ProductRequestPage from './components/ProductRequestsPage/productrequestpage'
+import CustomerOrdersPage from './components/CustomerOrdersPage/customerorderspage'
+import State from './components/State/state'
+import City from './components/City/city'
+import Ordertracepage from './components/Ordertracepage/ordertracepage'
 
 function App() {
   // const router = createBrowserRouter([
@@ -40,6 +44,10 @@ function App() {
         <Route path="/orderdetailspageadmin" element={<OrderDetailsPageAdmin />} />
         <Route path="/manageproductspageadmin" element={<ManageProductPageAdmin />} />
         <Route path="/productrequestpage" element={<ProductRequestPage />} />
+        <Route path="/customerorderspage" element={<CustomerOrdersPage />} />
+        <Route path="/state" element={<State />} />
+        <Route path="/city" element={<City/>} />
+        <Route path="/ordertracepage" element={<Ordertracepage/>} />
       </Route>
     )
   )

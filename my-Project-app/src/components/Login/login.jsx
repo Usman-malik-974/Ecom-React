@@ -18,6 +18,9 @@ export default function Login() {
             else if (t[1] == "user") {
                 navigator("/productpage");
             }
+            else if (t[1] == "state") {
+                navigator("/state");
+            }
             else {
                 navigator("/login");
             }
@@ -40,7 +43,7 @@ export default function Login() {
     function onLoginPress() {
         if (userDetails.username && userDetails.password) {
             LoginUser(userDetails).then(function (data) {
-                console.log("inresponse");
+                console.log("inresponse",data);
                 // console.log(data);
 
                 // localStorage.setItem()
@@ -53,8 +56,20 @@ export default function Login() {
                 else if(data=='admin'){
                     navigator("/admin");
                 }
-                else {
+                else if(data=='state'){
+                    navigator("/state");
+                }
+                else if(data=='city'){
+                    console.log("in city");
+                    navigator("/city");
+                }
+                else if(data=="Invalid Credentials")
+                {
                     setError("Invalid Credentials");
+                }
+                else if(data=="Please Verify your email")
+                {
+                    setError("Please Verify your email");
                 }
             })
         }

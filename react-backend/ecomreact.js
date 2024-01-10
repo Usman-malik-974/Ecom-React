@@ -72,10 +72,31 @@ const givesellerRequestDetails=require("./controller/givesellerrequestdetails")
 const actionofSellerRequest=require("./controller/actionofsellerrequest")
 
 const giveProductDetailsToAdmin=require("./controller/giveallproductdetails")
+
 const giveProductRequestToAdmin=require("./controller/giveproductrequeststoadmin")
+
 const actionofProductRequest=require("./controller/actionofproductrequest")
+
 const givePendingProductRequest=require("./controller/givependingrequests")
-const giveRejectedProductRequest=require("./controller/giverejectedrequests")
+const giveRejectedProductRequest=require("./controller/giverejectedrequests");
+const giveCustomerOrdersDetails = require("./controller/givecustomersorderdetails");
+const dispatchToState = require("./controller/dispatchtostate");
+
+const giveDispatchedOrderDetailsToSeller=require("./controller/givedispatchedorderdetails(seller).js");
+const giveUpcomingOrderDetailsToState=require("./controller/giveupcomingorderdetails(state).js");
+const giveUpcomingOrderDetailsToCity=require("./controller/giveupcomingorderdetails(city).js");
+const receivedOrderAtState=require("./controller/receivedorderatstate.js")
+const receivedOrderAtCity=require("./controller/receivedorderatcity.js")
+const receivedOrderByUser=require("./controller/receivedbyuser.js")
+const giveReceivedOrderDetailsToState=require("./controller/givereceivedorderdetails(state).js");
+const giveReceivedOrderDetailsToCity=require("./controller/givereceivedorderdetails(city).js");
+const dispatchToCity = require("./controller/dispatchtocity.js");
+const dispatchToUser = require("./controller/dispatchtouser.js");
+const giveDispatchedOrderDetailsToState=require("./controller/givedispatchedorderdetails(state).js");
+const giveDispatchedOrderDetailsToCity=require("./controller/givedispatchedorderdetails(city).js");
+const giveOrderDetailsToUser=require("./controller/giveorderdetailstouser");
+const cancelledByUser = require("./controller/cancelledbyuser.js");
+
 
 // app.use(express.static("products"));
 app.use(express.json());
@@ -142,6 +163,26 @@ app.get("/giveallproductdetails",giveProductDetailsToAdmin);
 app.post("/givependingrequest",givePendingProductRequest);
 
 app.post("/giverejectedrequest",giveRejectedProductRequest);
+app.post("/givecustomerordersdetails",giveCustomerOrdersDetails);
+app.post("/dispatchtostate",dispatchToState);
+app.post("/givedispatchedorderdetailstoseller",giveDispatchedOrderDetailsToSeller);
+app.post("/giveupcomingorderdetailstostate",giveUpcomingOrderDetailsToState);
+app.post("/giveupcomingorderdetailstocity",giveUpcomingOrderDetailsToCity);
+
+app.post("/receivedorderatstate",receivedOrderAtState);
+app.post("/receivedorderatcity",receivedOrderAtCity);
+app.post("/receivedbyuser",receivedOrderByUser);
+
+app.post("/givereceivedorderdetailstostate",giveReceivedOrderDetailsToState);
+app.post("/givereceivedorderdetailstocity",giveReceivedOrderDetailsToCity);
+app.post("/givedispatchedorderdetailstostate",giveDispatchedOrderDetailsToState);
+app.post("/givedispatchedorderdetailstocity",giveDispatchedOrderDetailsToCity);
+app.post("/dispatchtocity",dispatchToCity);
+app.post("/dispatchtouser",dispatchToUser);
+app.get("/giveproductrequestdetails",giveProductRequestToAdmin);
+app.post("/actionofproductrequest",actionofProductRequest);
+app.post("/giveorderdetailstouser",giveOrderDetailsToUser);
+app.post("/cancelledbyuser",cancelledByUser);
 // app.get("/c9b6e340a7608b8ca38d5efb6a43fcea",function(request,response){
 //     response.sendFile("./productimages/c9b6e340a7608b8ca38d5efb6a43fcea");
 // })
