@@ -17,7 +17,7 @@ function actionofSellerRequest(request,response){
                         response.status(500).send();
                     }
                     else if(data.affectedRows){
-                        console.log("sab hongya");
+                        // console.log("sab ho gya");
                         db.query(`update sellerdetails set isapproved=1 where sellerid=${sellerid}`,function(err,result){});
                         
                     }

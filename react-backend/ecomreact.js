@@ -65,9 +65,17 @@ const placeOrder=require("./controller/placeorder");
 
 const giveUserDetailsToAdmin=require("./controller/giveuserdetailstoadmin")
 
+const giveOrderDetailsToAdmin=require("./controller/giveorderdetailstoadmin")
+
 const givesellerRequestDetails=require("./controller/givesellerrequestdetails")
 
 const actionofSellerRequest=require("./controller/actionofsellerrequest")
+
+const giveProductDetailsToAdmin=require("./controller/giveallproductdetails")
+const giveProductRequestToAdmin=require("./controller/giveproductrequeststoadmin")
+const actionofProductRequest=require("./controller/actionofproductrequest")
+const givePendingProductRequest=require("./controller/givependingrequests")
+const giveRejectedProductRequest=require("./controller/giverejectedrequests")
 
 // app.use(express.static("products"));
 app.use(express.json());
@@ -125,6 +133,15 @@ app.get("/givealluserdetails",giveUserDetailsToAdmin);
 app.get("/givesellerrequestdetails",givesellerRequestDetails);
 
 app.post("/actionofsellerrequest",actionofSellerRequest);
+
+
+app.get("/giveallorderdetails",giveOrderDetailsToAdmin);
+
+app.get("/giveallproductdetails",giveProductDetailsToAdmin);
+
+app.post("/givependingrequest",givePendingProductRequest);
+
+app.post("/giverejectedrequest",giveRejectedProductRequest);
 // app.get("/c9b6e340a7608b8ca38d5efb6a43fcea",function(request,response){
 //     response.sendFile("./productimages/c9b6e340a7608b8ca38d5efb6a43fcea");
 // })

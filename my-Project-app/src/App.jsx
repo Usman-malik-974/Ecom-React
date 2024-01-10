@@ -11,6 +11,9 @@ import GoToCart from './components/CartPage/cartpage'
 import MerchantSignup from './components/MerchantSignup/merchantsignup'
 import OrderForm from './components/Orderform/orderform'
 import AdminPage from './components/AdminPage/adminpage'
+import OrderDetailsPageAdmin from './components/OrderdetailsPageAdmin/orderdetailspageadmin'
+import ManageProductPageAdmin from './components/ManageProductsPageAdmin/manageproductpageadmin'
+import ProductRequestPage from './components/ProductRequestsPage/productrequestpage'
 
 function App() {
   // const router = createBrowserRouter([
@@ -34,6 +37,9 @@ function App() {
         <Route path="/signupmerchant" element={<MerchantSignup />} />
         <Route path="/orderform" element={<OrderForm />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/orderdetailspageadmin" element={<OrderDetailsPageAdmin />} />
+        <Route path="/manageproductspageadmin" element={<ManageProductPageAdmin />} />
+        <Route path="/productrequestpage" element={<ProductRequestPage />} />
       </Route>
     )
   )

@@ -77,7 +77,7 @@ export default function renderResetPasswordPage() {
                 <p>{error}</p>
                 <div className={styles.oneline}>
                 <button className={styles.resetbtn} onClick={onResetPress}>Reset Password</button><br /><br />
-                <button className={styles.resetbtn} onClick={onGoBack}>Go back</button>
+                {/* <button className={styles.resetbtn} onClick={onGoBack}>Go back</button> */}
                 </div>
                 {/* <Link to="/signup">Create a new account</Link> */}
                 {/* <span>or</span> */}

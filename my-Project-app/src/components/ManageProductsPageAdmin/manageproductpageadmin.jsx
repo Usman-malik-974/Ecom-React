@@ -1,13 +1,14 @@
 import React from "react";
-import styles from './adminpage.module.css'
+import styles from './manageproductpageadmin.module.css'
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 export default function () {
     const [userDetails, setDetails] = useState({});
-    const [alluserdetails, setalluserDetails] = useState([]);
-    const [sellerdetails, setsellerdetails] = useState([]);
+    const [productdetails, setproductDetails] = useState([]);
+    const [productrequestdetails, setproductrequestDetails] = useState([]);
+    // const [sellerdetails, setsellerdetails] = useState([]);
     const navigator = useNavigate();
     useEffect(function () {
         const token = localStorage.getItem("token");
@@ -38,12 +39,9 @@ export default function () {
         }
     }, [])
     useEffect(function () {
-        console.log("ineffecr");
-        // getfiveproducts();
-        // console.log("wytfdtsyg", userDetails.userid);
         if (userDetails.username) {
             console.log("inif");
-            fetch("http://localhost:3000/givealluserdetails"
+            fetch("http://localhost:3000/giveallproductdetails"
                 //     method: "POST",
                 //     headers: { "content-type": "application/json" },
                 //     body: JSON.stringify({ username: userDetails.username }),
@@ -54,7 +52,7 @@ export default function () {
                 return response.json();
             }).then(function (data) {
                 console.log(data);
-                setalluserDetails([...data.usersdata]);
+                setproductDetails([...data.productsdata]);
             })
         }
     }, [userDetails])
@@ -64,7 +62,7 @@ export default function () {
         // console.log("wytfdtsyg", userDetails.userid);
         if (userDetails.username) {
             // console.log("inif");
-            fetch("http://localhost:3000/givesellerrequestdetails"
+            fetch("http://localhost:3000/giveproductrequestdetails"
                 //     method: "POST",
                 //     headers: { "content-type": "application/json" },
                 //     body: JSON.stringify({ username: userDetails.username }),
@@ -75,52 +73,39 @@ export default function () {
                 return response.json();
             }).then(function (data) {
                 console.log(data);
-                setsellerdetails([...data.sellersdata]);
+                setproductrequestDetails([...data.productrequestsdata]);
             })
         }
     }, [userDetails])
-    function onSelectInput(event) {
-        console.log(event.target);
-        if (event.target.value == "logout") {
-            localStorage.removeItem("token");
-            navigator("/");
-        }
-        else if (event.target.value == "orderdetails") {
-            navigator("/orderdetailspageadmin");
-        }
-        else if (event.target.value == "manageproducts") {
-            navigator("/manageproductspageadmin");
-        }
-        else if (event.target.value == "resetpassword") {
-            navigator("/resetpassword");
-        }
+    function goback() {
+        navigator("/admin");
     }
     function actionofrequest(data, message) {
         {
             return function () {
-                fetch("http://localhost:3000/actionofsellerrequest", {
+                fetch("http://localhost:3000/actionofproductrequest", {
                     method: "POST",
                     headers: { "content-type": "application/json" },
-                    body: JSON.stringify({ sellerid: data.sellerid, action: message })
+                    body: JSON.stringify({ productid: data._id, action: message })
                 }).then(function (response) {
                     console.log(response.status)
                     if (response.status == 500) {
                         Swal.fire({ title: "something went wrong", icon: "error" })
                     }
                     else if (response.status == 200) {
-                        Swal.fire({ title: "Seller Approved", icon: "success" }).then(function () {
+                        Swal.fire({ title: "Product Approved", icon: "success" }).then(function () {
 
-                            setsellerdetails(sellerdetails.filter(function (element) {
-                                return element.sellerid != data.sellerid;
+                            setproductrequestDetails(productrequestdetails.filter(function (element) {
+                                return element._id != data._id;
                             }))
-                            setalluserDetails([...alluserdetails,{userid:data.sellerid,username:data.username,email:data.email,role:"seller",isverified:1}])
+                            setproductDetails([...productdetails,data]);
                         })
                     }
                     else if (response.status == 201) {
-                        Swal.fire({ title: "Seller rejected", icon: "error" }).then(function () {
+                        Swal.fire({ title: "Product rejected", icon: "error" }).then(function () {
 
-                            setsellerdetails(sellerdetails.filter(function (element) {
-                                return element.sellerid != data.sellerid;
+                            setproductrequestDetails(productrequestdetails.filter(function (element) {
+                                return element._id != data._id;
                             }))
                             // setalluserDetails([...alluserdetails,{userid:data.sellerid,username:data.username,email:data.email,role:"seller",isverified:1}])
                         })
@@ -136,80 +121,71 @@ export default function () {
         <>
             <header className={styles.header}>
                 <div className={styles.headerdiv}>
-                    <p className={styles.username}><span className={styles.namespan}>Username:{userDetails.username}</span></p>
-                    <select onChange={onSelectInput} className={styles.options}>
-                        <option className={styles.hide} value="user">{userDetails.username}</option>
-                        <option value="logout">Logout</option>
-                        <option value="orderdetails">Order details</option>
-                        <option value="manageproducts">Manage Products</option>
-                        <option value="resetpassword">Reset Password</option>
-                    </select>
+                    <p className={styles.username}><span className={styles.namespan}>Welcome {userDetails.username}</span></p>
+                    <button onClick={goback} className={styles.button}>Go back</button>
                 </div>
             </header>
             <div className={styles.tablecontainer}>
-                <h2>Approve Seller Requests</h2>
+                <h2>Approve Products</h2>
                 <table>
                     <thead>
                         <tr>
                             <th>Seller ID</th>
-                            <th>UserName</th>
-                            <th>Email</th>
-                            <th>aadhar no</th>
-                            <th>gst no</th>
-                            <th>brandname</th>
+                            <th>Seller Name</th>
+                            <th>Product Name</th>
+                            <th>image</th>
+                            <th>Stock</th>
+                            <th>Price</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    {sellerdetails.length?
-                    <tbody>
-                    {sellerdetails.map(function (element) {
-                        return (
+                    {productrequestdetails.length ?
+                        <tbody>
+                            {productrequestdetails.map(function (element) {
+                                return (
 
-                            <tr>
-                                <td>{element.sellerid}</td>
-                                <td>{element.username}</td>
-                                <td>{element.email}</td>
-                                <td>{element.aadharno}</td>
-                                <td>{element.gstno}</td>
-                                <td>{element.brandname}</td>
-                                <td>
-                                    <button onClick={actionofrequest(element, "approved")} className={styles.greenbtn}>✓</button>
-                                    <button onClick={actionofrequest(element, "rejected")} className={styles.redbtn}>✖</button>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-                :
-                <h2 className={styles.red}>No data to display</h2>}   
+                                    <tr>
+                                        <td>{element.sellerid}</td>
+                                        <td>{element.username}</td>
+                                        <td>{element.name}</td>
+                                        <td><img width={50} height={50} src={"http://localhost:3000/" + element.image} /></td>
+                                        <td>{element.stock}</td>
+                                        <td>{"Rs. " + element.price}</td>
+                                        <td>
+                                            <button onClick={actionofrequest(element, "approved")} className={styles.greenbtn}>✓</button>
+                                            <button onClick={actionofrequest(element, "rejected")} className={styles.redbtn}>✖</button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                        :
+                        <h2 className={styles.red}>No data to display</h2>}
                 </table>
             </div>
             {/* <h1 className={styles.h1}>User Details</h1> */}
             <div className={styles.tablecontainer}>
-                <h2>User Details</h2>
+                <h2>Available Products</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>User ID</th>
-                            <th>UserName</th>
-                            <th>Email</th>
-                            <th>role</th>
-                            <th>is verified</th>
-                            {/* <th>State</th>
-                    <th>Dispatch To</th>
-                    <th>Action</th> */}
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>image</th>
+                            <th>Stock</th>
+                            <th>Price</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {alluserdetails.map(function (element) {
+                        {productdetails.map(function (element) {
                             return (
 
                                 <tr>
-                                    <td>{element.userid}</td>
-                                    <td>{element.username}</td>
-                                    <td>{element.email}</td>
-                                    <td>{element.role}</td>
-                                    <td>{element.isverified}</td>
+                                    <td>{element._id}</td>
+                                    <td>{element.name}</td>
+                                    <td><img width={50} height={50} src={"http://localhost:3000/" + element.image} /></td>
+                                    <td>{element.stock}</td>
+                                    <td>{"Rs. " + element.price}</td>
                                 </tr>
                             )
                         })}

@@ -5,7 +5,7 @@ function giveProductToUser(request,response){
     console.log(start);
     console.log(start+5);
     // console.log(`select * from productdetails limit ${start},5}`);
-    db.query(`select * from productdetails limit ${start},5`,function(err,result){
+    db.query(`select * from productdetails where isactive=1 limit ${start},5`,function(err,result){
         if(err){
             console.log("ghdhgc");
             response.status(500);

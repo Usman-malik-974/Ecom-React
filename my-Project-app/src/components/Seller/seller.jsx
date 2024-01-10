@@ -103,7 +103,12 @@ export default function RenderSellerHomePage() {
             localStorage.removeItem("token");
             navigator("/");
         }
-        else if (event.target.value == "goback");
+        // else if (event.target.value == "goback"){
+            
+        // }
+        else if (event.target.value == "productrequests");{
+            navigator("/productrequestpage")
+        }
     }
 // console.log("here: ",productdetails)
     function deleteFunction(pid) {
@@ -153,7 +158,8 @@ export default function RenderSellerHomePage() {
                     <select onChange={onSelectInput} className={styles.options}>
                         <option className={styles.hide} value="seller">Seller</option>
                         <option value="logout">Logout</option>
-                        <option value="goback">Goback</option>
+                        {/* <option value="goback">Goback</option> */}
+                        <option value="productrequests">Product Requests</option>
                     </select>
                 </div>
             </header>
