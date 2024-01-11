@@ -16,7 +16,7 @@ export default function () {
         else {
             const t = token.split(":");
             if (t[1] != "seller") {
-                //dont have access
+                navigator("/noaccess")
             }
             else {
                 fetch("http://localhost:3000/giveuserdetails", {

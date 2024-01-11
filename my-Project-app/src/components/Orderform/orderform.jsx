@@ -27,6 +27,34 @@ export default function Signup() {
             })
         }
     }
+    useEffect(function () {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigator("/login");
+        }
+        else {
+            const t = token.split(":");
+            if (t[1] != "user") {
+                navigator("/noaccess")
+            }
+            else {
+                fetch("http://localhost:3000/giveuserdetails", {
+                    headers: { token: t[0] }
+                }).then(function (response) {
+                    if (response.status == 401) {
+                        localStorage.removeItem("token");
+                        navigator("/login")
+                    }
+                    return response.json();
+                }).then(function (data) {
+                    console.log(data);
+                    setDetails({ ...data });
+                }).catch(function (err) {
+                    navigator("/login");
+                })
+            }
+        }
+    }, [])
     function onPlaceorderPress() {
         console.log(orderDetails);
         if (orderDetails.firstname && orderDetails.lastname && orderDetails.email && orderDetails.address && orderDetails.city && orderDetails.state && orderDetails.country && orderDetails.pincode) {

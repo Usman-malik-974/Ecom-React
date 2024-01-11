@@ -18,6 +18,7 @@ import CustomerOrdersPage from './components/CustomerOrdersPage/customerorderspa
 import State from './components/State/state'
 import City from './components/City/city'
 import Ordertracepage from './components/Ordertracepage/ordertracepage'
+import DontAccessPage from './components/DontAccessPage/dontaccesspage'
 
 function App() {
   // const router = createBrowserRouter([
@@ -48,6 +49,7 @@ function App() {
         <Route path="/state" element={<State />} />
         <Route path="/city" element={<City/>} />
         <Route path="/ordertracepage" element={<Ordertracepage/>} />
+        <Route path="/noaccess" element={<DontAccessPage/>} />
       </Route>
     )
   )

@@ -22,7 +22,7 @@ export default function renderCartPage() {
         else {
             const t = token.split(":");
             if (t[1] != "user") {
-                //dont have access
+                navigator("/noacces");
             }
             else {
                 fetch("http://localhost:3000/giveuserdetails", {
